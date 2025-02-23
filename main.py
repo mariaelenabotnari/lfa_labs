@@ -88,6 +88,56 @@ class Grammar:
 
         return ["No valid derivation found."]
 
+    def check_grammar_type(self):
+        type_3 = True
+        type_2 = True
+        type_1 = True
+
+        for left_part, right_parts in self.P_dictionary.items():
+            if len(left_part) != 1 or left_part not in self.Vn:
+                type_2 = False
+
+            for right_part in right_parts:
+                if not ((len(right_part) == 1 and right_part in self.Vt) or
+                        (len(right_part) == 2 and right_part[0] in self.Vt and right_part[1] in self.Vn)):
+                    type_3 = False
+
+                if len(right_part) < len(left_part):
+                    type_1 = False
+
+        if type_3:
+            print("\nType 3 Grammar (Regular Grammar):")
+            print("Each production rule follows the form 'A → aB' or 'A → a'.")
+            print(
+                "Regular grammars can be either right-linear, where non-terminals appear at the end, or left-linear, where they appear at the beginning.")
+            print(
+                "These grammars can be converted into finite automata and are commonly used in lexical analysis and defining regular expressions.")
+            print("Example: S → aS | bA | ε, where ε represents an empty string.")
+
+        elif type_2:
+            print("\nType 2 Grammar (Context-Free Grammar):")
+            print("The left-hand side of each production rule consists of a single non-terminal.")
+            print("The right-hand side can contain terminals and non-terminals in any order.")
+            print(
+                "Context-free grammars are widely used in defining the syntax of programming languages and in parsing algorithms.")
+            print("Example: S → aSb | ε.")
+
+        elif type_1:
+            print("\nType 1 Grammar (Context-Sensitive Grammar):")
+            print("Each production rule must have a right-hand side that is at least as long as the left-hand side.")
+            print(
+                "These grammars are more powerful than context-free grammars and can define languages that require more computational power to parse.")
+            print("They are used in natural language processing and advanced compiler optimizations.")
+            print("Example: AB → ABC | aB.")
+
+        else:
+            print("\nType 0 Grammar (Unrestricted Grammar):")
+            print("There are no restrictions on the form of production rules.")
+            print("These grammars can describe the most complex languages and require a Turing machine to recognize.")
+            print("They are used in formal language theory and studies of computability.")
+            print("Example: AB → BA | a.")
+
+
 class FA:
     def __init__(self, Vn, Vt, P, S):
         self.Vn = Vn
@@ -170,5 +220,9 @@ if __name__ == "__main__":
     result2 = fa.check_string_via_transition('abd')
     print("\nChecking if the string abd can be obtained via the state transition from FA:")
     print(result2)
+
+    grammar.check_grammar_type()
+
+
 
 
