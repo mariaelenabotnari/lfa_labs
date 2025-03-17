@@ -163,5 +163,3 @@ In this laboratory work, we learned about finite automata and formal grammars, f
 
 This work helped us see how automata process languages and why DFAs are more efficient than NDFAs in practical applications like search engines and compilers. By implementing these concepts, we gained a better understanding of how computers recognize patterns and process inputs, which is important for future studies in programming and algorithms.
 
-
-
